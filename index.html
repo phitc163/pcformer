@@ -766,12 +766,13 @@
         <sup>3</sup> Vietnam National University, Ho Chi Minh City, Vietnam
       </p>
 
-      <!-- Conference -->
-      <div>
-        <span class="conf-badge">
-          <span class="conf-dot"></span>
-          Preprint · 2026
-        </span>
+      <!-- Notice -->
+      <div style="margin-bottom: 1.5rem;">
+        <p
+          style="font-size: 0.95rem; color: var(--accent2); background: var(--accent-light); display: inline-block; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #90caf9;">
+          <i class="fas fa-info-circle" style="margin-right: 0.4rem;"></i>
+          The dataset and source code will be made publicly available upon acceptance of the paper.
+        </p>
       </div>
 
       <!-- Link buttons -->
@@ -781,6 +782,9 @@
         </a>
         <a href="#" target="_blank" class="link-btn link-btn-outline">
           <i class="fab fa-github"></i> Code
+        </a>
+        <a href="#" target="_blank" class="link-btn link-btn-outline">
+          <i class="fas fa-database"></i> Dataset
         </a>
         <a href="#demo" class="link-btn link-btn-outline">
           <i class="fas fa-play-circle"></i> Demo Videos
@@ -864,43 +868,6 @@
         </p>
       </div>
 
-      <!-- Contribution cards -->
-      <div class="contrib-grid" style="margin-top: 2.5rem;">
-        <div class="contrib-card reveal">
-          <div class="contrib-num">1</div>
-          <div class="contrib-title">Dual-Stream Feature Extraction</div>
-          <div class="contrib-desc">
-            Fuses skeletal action representations (YOLOv11 Pose + MobileNet-v3-Small) with scene-level semantics (HARV
-            ViT) to understand human interactions within classroom contexts.
-          </div>
-        </div>
-        <div class="contrib-card reveal" style="transition-delay:.08s">
-          <div class="contrib-num">2</div>
-          <div class="contrib-title">Multimodal Bottleneck Transformer</div>
-          <div class="contrib-desc">
-            Restricts cross-stream communication through a small set of learnable bottleneck tokens. This design acts as
-            a structural regularizer, distilling crucial cross-modal dependencies.
-          </div>
-        </div>
-        <div class="contrib-card reveal" style="transition-delay:.16s">
-          <div class="contrib-num">3</div>
-          <div class="contrib-title">Gated Fusion & HAP</div>
-          <div class="contrib-desc">
-            An adaptive gate dynamically calibrates contributions of action and context streams, followed by
-            Hierarchical Attention Pooling to capture robust temporal global descriptors.
-          </div>
-        </div>
-        <div class="contrib-card reveal" style="transition-delay:.24s">
-          <div class="contrib-num">4</div>
-          <div class="contrib-title">The SAVE Dataset</div>
-          <div class="contrib-desc">
-            Introduction of School Aggression and Violence Evaluation (SAVE): a novel dataset of 1,826 high-quality
-            real-world school videos recorded from varied surveillance viewpoints.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ══════════════ DEMO VIDEOS ══════════════ -->
   <section id="demo">
@@ -916,15 +883,15 @@
 
         <div class="demo-card reveal">
           <div class="video-wrap">
-            <iframe src="https://drive.google.com/file/d/1Z0-FbinAF4j6sONHHA0lp0ohTxMD2P2M/preview" allow="autoplay"
-              allowfullscreen></iframe>
+            <iframe src="https://drive.google.com/file/d/1Z0-FbinAF4j6sONHHA0lp0ohTxMD2P2M/preview"
+              allow="autoplay; fullscreen" allowfullscreen></iframe>
           </div>
         </div>
 
         <div class="demo-card reveal" style="transition-delay:.1s">
           <div class="video-wrap">
-            <iframe src="https://drive.google.com/file/d/1l3wdLnR6rbTUL1cEKLgmLiVVkE8Td7r3/preview" allow="autoplay"
-              allowfullscreen></iframe>
+            <iframe src="https://drive.google.com/file/d/1l3wdLnR6rbTUL1cEKLgmLiVVkE8Td7r3/preview"
+              allow="autoplay; fullscreen" allowfullscreen></iframe>
           </div>
         </div>
 
@@ -954,28 +921,28 @@
           </thead>
           <tbody>
             <tr>
-              <td>ViViT [36]</td>
+              <td>ViViT</td>
               <td>66.67</td>
               <td>35.68</td>
               <td class="best-val">95.65</td>
               <td>51.97</td>
             </tr>
             <tr>
-              <td>3D CNN [18]</td>
+              <td>3D CNN</td>
               <td>73.22</td>
               <td>80.54</td>
               <td>70.62</td>
               <td>75.25</td>
             </tr>
             <tr>
-              <td>BrutNet [7]</td>
+              <td>BrutNet</td>
               <td>79.78</td>
               <td>69.73</td>
               <td>87.76</td>
               <td>77.71</td>
             </tr>
             <tr>
-              <td>SepConvLSTM [10]</td>
+              <td>SepConvLSTM</td>
               <td>91.80</td>
               <td>90.27</td>
               <td>93.30</td>
@@ -1010,42 +977,42 @@
           </thead>
           <tbody>
             <tr>
-              <td>Su et al., 2020 [19]</td>
+              <td>Su et al., 2020</td>
               <td>98.50</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
             </tr>
             <tr>
-              <td>Islam et al., 2021 [10]</td>
+              <td>Islam et al., 2021</td>
               <td>100.00</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
             </tr>
             <tr>
-              <td>Hachiuma et al., 2023 [12]</td>
+              <td>Hachiuma et al., 2023</td>
               <td>99.00</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
             </tr>
             <tr>
-              <td>Khan et al., 2024 [17]</td>
+              <td>Khan et al., 2024</td>
               <td>99.00</td>
               <td>-</td>
               <td>-</td>
               <td>98.00</td>
             </tr>
             <tr>
-              <td>Dündar et al., 2024 [18]</td>
+              <td>Dündar et al., 2024</td>
               <td>100.00</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
             </tr>
             <tr>
-              <td>Tran et al., 2025 [9]</td>
+              <td>Tran et al., 2025</td>
               <td>100.00</td>
               <td>100.00</td>
               <td>100.00</td>
@@ -1078,56 +1045,56 @@
           </thead>
           <tbody>
             <tr>
-              <td>Su et al., 2020 [19]</td>
+              <td>Su et al., 2020</td>
               <td>96.80</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
             </tr>
             <tr>
-              <td>Islam et al., 2021 [10]</td>
+              <td>Islam et al., 2021</td>
               <td>99.50</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
             </tr>
             <tr>
-              <td>Hachiuma et al., 2023 [12]</td>
+              <td>Hachiuma et al., 2023</td>
               <td>99.50</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
             </tr>
             <tr>
-              <td>Dündar et al., 2024 [18]</td>
+              <td>Dündar et al., 2024</td>
               <td>95.50</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
             </tr>
             <tr>
-              <td>Khan et al., 2024 [17]</td>
+              <td>Khan et al., 2024</td>
               <td>98.50</td>
               <td>-</td>
               <td>-</td>
               <td>98.00</td>
             </tr>
             <tr>
-              <td>Tran et al., 2025 [9]</td>
+              <td>Tran et al., 2025</td>
               <td>90.43</td>
               <td>91.54</td>
               <td>92.61</td>
               <td>92.02</td>
             </tr>
             <tr>
-              <td>Khan et al., 2025 [20]</td>
+              <td>Khan et al., 2025</td>
               <td>97.20</td>
               <td>95.10</td>
               <td>95.10</td>
               <td>95.10</td>
             </tr>
             <tr>
-              <td>Negre et al., 2026 [37]</td>
+              <td>Negre et al., 2026</td>
               <td>97.00</td>
               <td>98.00</td>
               <td>95.00</td>
@@ -1160,35 +1127,35 @@
           </thead>
           <tbody>
             <tr>
-              <td>Varghese et al., 2020 [38]</td>
+              <td>Varghese et al., 2020</td>
               <td>92.90</td>
               <td>92.00</td>
               <td>93.00</td>
               <td>-</td>
             </tr>
             <tr>
-              <td>Su et al., 2020 [19]</td>
+              <td>Su et al., 2020</td>
               <td>94.50</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
             </tr>
             <tr>
-              <td>Hachiuma et al., 2023 [12]</td>
+              <td>Hachiuma et al., 2023</td>
               <td>94.70</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
             </tr>
             <tr>
-              <td>Khan et al., 2024 [17]</td>
+              <td>Khan et al., 2024</td>
               <td>97.00</td>
               <td>-</td>
               <td>-</td>
               <td>96.00</td>
             </tr>
             <tr>
-              <td>Negre et al., 2026 [37]</td>
+              <td>Negre et al., 2026</td>
               <td>90.00</td>
               <td>97.00</td>
               <td>86.00</td>
@@ -1431,7 +1398,7 @@
         VNU-HCM
       </p>
       <p style="margin-top:0.4rem;">
-        Dataset: <a href="#" target="_blank">SAVE (School Aggression and Violence Evaluation)</a> ·
+        <!-- Dataset: <a href="#" target="_blank">SAVE (School Aggression and Violence Evaluation)</a> · -->
         Inspired by <a href="https://nerfies.github.io" target="_blank">Nerfies</a>
       </p>
     </div>
