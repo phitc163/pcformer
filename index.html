@@ -741,7 +741,7 @@
       <div class="container">
 
         <h1 class="paper-title">
-          Pose-Context Bottleneck Transformer<br />for School Violence Detection
+          Towards Robust School Violence Detection via Pose–Context Bottleneck Interaction
         </h1>
 
         <!-- Authors -->
@@ -761,7 +761,7 @@
           * Corresponding author
         </div>
         <p class="affiliations">
-          <sup>1</sup> Faculty of Information Technology, Ho Chi Minh City University of Education, Vietnam <br />
+          <sup>1</sup> Faculty of Information Technology, Ho Chi Minh City University of Education, Ho Chi Minh City, Vietnam <br />
           <sup>2</sup> Faculty of Computer Science, University of Information Technology, Ho Chi Minh City, Vietnam <br />
           <sup>3</sup> Vietnam National University, Ho Chi Minh City, Vietnam
         </p>
@@ -820,23 +820,22 @@
         <h2 class="section-title">Abstract</h2>
         <hr class="section-hr" />
         <p class="abstract-text reveal">
-          School violence detection remains challenging due to complex human interactions,
-          diverse surveillance conditions, and the lack of domain-specific datasets. This
-          study introduces <strong>PCFormer</strong>, a dual-stream pose-context framework for video-based
-          violence detection in educational settings. The pose-guided action stream extracts
-          skeleton-based representations from sampled frames to emphasize human motion while
-          suppressing irrelevant background information. In parallel, the semantic context
-          stream captures global visual cues from RGB frames to provide complementary scene-level
-          information. To integrate these complementary representations, PCFormer adopts a
-          <strong>Multimodal Bottleneck Transformer</strong>, where learnable bottleneck tokens mediate compact
-          and controlled interaction between pose-guided action features and contextual features.
-          Gated cross-modal fusion and hierarchical attention pooling are then used to produce a
-          video-level descriptor for binary violence classification. To support research in
-          school-specific violence detection, we further introduce <strong>SAVE (School Aggression and
-            Violence Evaluation)</strong>, a dataset of 1,826 video clips recorded in classroom environments
-          from multiple camera viewpoints. Experiments show that PCFormer achieves 93.06% accuracy
-          on SAVE and strong performance on three public benchmarks: Hockey Fight (99.10%), Movies
-          Fight (100.00%), and Crowd Violence (99.60%).
+          School violence detection requires fine-grained reasoning over human motion and scene context, 
+          as aggressive behaviors may be visually close to benign student interactions under partial 
+          occlusion and limited surveillance viewpoints. However, existing violence detection methods and 
+          benchmarks are mostly designed for generic fight scenarios, making them less suitable for capturing 
+          pose–context ambiguity in school-specific interactions. To address this challenge, we propose 
+          <strong>PCFormer</strong>, a pose–context framework for video-based violence detection in educational environments. 
+          PCFormer integrates a pose-based action stream and a semantic context stream to jointly capture 
+          skeleton-rendered motion patterns and RGB-based scene semantics. To enable effective cross-stream 
+          communication, a bottleneck-based interaction module mediates compact information exchange between 
+          pose and context features without dense cross-attention. The enhanced representations are further 
+          combined through reliability-aware gated fusion and hierarchical attention pooling to generate a 
+          video-level descriptor for binary violence classification. In addition, the <strong>SAVE</strong>strong> dataset is introduced 
+          to support school-specific evaluation, comprising 1,826 multi-view classroom clips that cover aggressive 
+          behaviors and visually similar non-violent interactions. Experiments show that PCFormer achieves 93.06% 
+          accuracy on SAVE and competitive performance on Movies Fight, Hockey Fight, and Crowd Violence. These 
+          results highlight the importance of pose–context interaction for detecting visually ambiguous violence in school environments.
         </p>
         <div class="kw-row reveal">
           <span class="kw">School Violence</span>
