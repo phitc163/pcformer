@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   PCFormer: Pose–Context Bottleneck Interaction for Video-Based School Violence Detection
+  </title>
+  <meta content="PCFormer: Pose–Context Bottleneck Interaction for Video-Based School Violence Detection" name="description"/>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@400;500&amp;display=swap" rel="stylesheet"/>
+  <!-- Font Awesome for icons -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <!-- ══════════════ NAV ══════════════ -->
+  <nav>
+   <div class="nav-inner">
+    <a href="#abstract">
+     Abstract
+    </a>
+    <a href="#architecture">
+     Architecture
+    </a>
+    <a href="#demo">
+     Demo
+    </a>
+    <a href="#results">
+     Results
+    </a>
+   </div>
+  </nav>
+  <!-- ══════════════ HERO ══════════════ -->
+  <div class="hero">
+   <div class="container">
+    <h1 class="paper-title">
+     PCFormer: Pose–Context Bottleneck Interaction for Video-Based School Violence Detection
+    </h1>
+    <!-- Authors -->
+    <p class="authors">
+     <a href="https://scholar.google.com/citations?user=9GZ8_9EAAAAJ">
+      Phi Ta
+     </a>
+     <sup>
+      1,2,3
+     </sup>
+     <span class="author-sep">
+      ,
+     </span>
+     <a href="https://scholar.google.com/citations?user=c8a5fE8AAAAJ">
+      Nha Tran
+     </a>
+     <sup>
+      1,2,3
+     </sup>
+     <span class="author-sep">
+      ,
+     </span>
+     <a href="https://scholar.google.com/citations?user=i0l3wTYAAAAJ">
+      Khanh Ngo
+     </a>
+     <sup>
+      1
+     </sup>
+     <span class="author-sep">
+      ,
+     </span>
+     <a href="https://scholar.google.com/citations?user=ddyBSkoAAAAJ">
+      Hien D. Nguyen
+     </a>
+     <sup>
+      2,3
+     </sup>
+     <span class="author-sep">
+      ,
+     </span>
+     <a href="https://scholar.google.com/citations?user=UphwTDcAAAAJ">
+      Hung Nguyen
+     </a>
+     <sup>
+      1*
+     </sup>
+     <span class="author-sep">
+     </span>
+    </p>
+    <div class="authors-notes">
+     * Corresponding author
+    </div>
+    <p class="affiliations">
+     <sup>
+      1
+     </sup>
+     Faculty of Information Technology, Ho Chi Minh City University of Education, Ho Chi Minh City, Vietnam
+     <br/>
+     <sup>
+      2
+     </sup>
+     Faculty of Computer Science, University of Information Technology, Ho Chi Minh City, Vietnam
+     <br/>
+     <sup>
+      3
+     </sup>
+     Vietnam National University, Ho Chi Minh City, Vietnam
+    </p>
+    <!-- Notice -->
+    <div class="notice-wrapper">
+     <p class="notice-box">
+      <i class="fas fa-info-circle notice-icon">
+      </i>
+      The dataset and source code will be made publicly available through the project page.
+     </p>
+    </div>
+    <!-- Link buttons -->
+    <div class="link-buttons">
+     <a class="link-btn link-btn-dark" href="#" target="_blank">
+      <i class="far fa-file-pdf">
+      </i>
+      Paper (PDF)
+     </a>
+     <a class="link-btn link-btn-outline" href="#" target="_blank">
+      <i class="fab fa-github">
+      </i>
+      Code
+     </a>
+     <a class="link-btn link-btn-outline" href="#" target="_blank">
+      <i class="fas fa-database">
+      </i>
+      Dataset
+     </a>
+     <a class="link-btn link-btn-outline" href="#demo">
+      <i class="fas fa-play-circle">
+      </i>
+      Demo Videos
+     </a>
+    </div>
+    <!-- Stats strip -->
+    <div class="stats-strip reveal">
+     <div class="stat-item">
+      <span class="stat-num">
+       93.06%
+      </span>
+      <div class="stat-lbl">
+       Accuracy on
+       <br/>
+       SAVE Dataset
+      </div>
+     </div>
+     <div class="stat-item">
+      <span class="stat-num">
+       1,826
+      </span>
+      <div class="stat-lbl">
+       Videos in
+       <br/>
+       SAVE Dataset
+      </div>
+     </div>
+     <div class="stat-item">
+      <span class="stat-num">
+       Dual
+      </span>
+      <div class="stat-lbl">
+       Action &amp; Context
+       <br/>
+       Streams
+      </div>
+     </div>
+     <div class="stat-item">
+      <span class="stat-num">
+       Bottleneck
+      </span>
+      <div class="stat-lbl">
+       Cross-Modal
+       <br/>
+       Fusion
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- ══════════════ ABSTRACT ══════════════ -->
+  <section id="abstract">
+   <div class="container">
+    <h2 class="section-title">
+     Abstract
+    </h2>
+    <hr class="section-hr"/>
+    <p class="abstract-text reveal">
+     School violence detection requires fine-grained reasoning over human motion and scene context,
+          as aggressive behaviors may be visually close to benign student interactions under partial
+          occlusion and limited surveillance viewpoints. However, existing violence detection methods and
+          benchmarks are mostly designed for generic fight scenarios, making them less effective in
+          distinguishing visually similar violent and non-violent school interactions. To address this challenge,
+          we propose
+     <strong>
+      PCFormer
+     </strong>
+     , a pose–context framework for video-based violence detection in
+          educational environments. PCFormer integrates a pose-based action stream and a semantic context stream
+          to jointly capture skeleton-rendered motion patterns and RGB-based scene semantics. A bottleneck-based
+          interaction module mediates compact information exchange between pose and context features without
+          dense cross-attention. The enhanced representations are then combined through reliability-aware gated
+          fusion and hierarchical attention pooling to generate a video-level descriptor for binary violence
+          classification. In addition, the
+     <strong>
+      SAVE
+     </strong>
+     dataset is introduced as a school-specific
+          benchmark comprising 1,826 classroom videos with aggressive behaviors and visually similar non-violent
+          interactions. PCFormer achieves 93.06% accuracy on SAVE and competitive performance on Movies Fight,
+          Hockey Fight, and Crowd Violence.
+    </p>
+    <div class="kw-row reveal">
+     <span class="kw">
+      School Violence
+     </span>
+     <span class="kw">
+      Vision Transformer
+     </span>
+     <span class="kw">
+      Attention
+     </span>
+     <span class="kw">
+      Violence Detection
+     </span>
+    </div>
+   </div>
+  </section>
+  <!-- ══════════════ ARCHITECTURE ══════════════ -->
+  <section class="section-alt" id="architecture">
+   <div class="container">
+    <h2 class="section-title">
+     Model Architecture
+    </h2>
+    <hr class="section-hr"/>
+    <div class="arch-figure reveal">
+     <img alt="PCFormer Architecture Diagram" decoding="async" height="550" src="assets/images/PCFormer.png" width="1020"/>
+     <p class="fig-caption">
+      <strong>
+       Figure 1.
+      </strong>
+      Overview of the
+      <strong>
+       PCFormer
+      </strong>
+      architecture.
+            The model takes an input video, samples frames, and feeds them into two streams. The
+      <em>
+       pose-based action
+              stream
+      </em>
+      uses YOLO11-Pose to extract skeletal features encoded by MobileNet-v3-Small. The
+      <em>
+       semantic
+              context stream
+      </em>
+      uses a fine-tuned HARV Vision Transformer. The modalities interact via a
+      <strong>
+       Multimodal Bottleneck Transformer (MBT)
+      </strong>
+      , where a shared set of learnable bottleneck tokens
+            mediates compact cross-modal interaction while reducing noisy information exchange and computational overhead. The representations are then merged using Gated
+            Cross-Modal Fusion and summarized via Hierarchical Attention Pooling (HAP). Finally, a lightweight
+            Classification Head predicts the violence probability.
+     </p>
+    </div>
+   </div>
+  </section>
+  <!-- ══════════════ DEMO VIDEOS ══════════════ -->
+  <section id="demo">
+   <div class="container">
+    <h2 class="section-title">
+     Demo Videos
+    </h2>
+    <hr class="section-hr"/>
+    <p class="demo-intro">
+     Qualitative results of PCFormer on held-out validation videos.
+          Each clip is processed end-to-end using the trained dual-stream model.
+    </p>
+    <div class="demo-grid">
+     <div class="demo-card reveal">
+      <div class="video-wrap">
+       <iframe allow="autoplay; fullscreen" allowfullscreen="" src="https://drive.google.com/file/d/1Z0-FbinAF4j6sONHHA0lp0ohTxMD2P2M/preview">
+       </iframe>
+      </div>
+     </div>
+     <div class="demo-card reveal reveal-delay-1">
+      <div class="video-wrap">
+       <iframe allow="autoplay; fullscreen" allowfullscreen="" src="https://drive.google.com/file/d/1l3wdLnR6rbTUL1cEKLgmLiVVkE8Td7r3/preview">
+       </iframe>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- ══════════════ RESULTS ══════════════ -->
+  <section class="section-alt" id="results">
+   <div class="container">
+    <h2 class="section-title">
+     Quantitative Results
+    </h2>
+    <hr class="section-hr"/>
+    <p class="result-caption">
+     Performance comparison of baseline models on the
+     <strong>
+      SAVE dataset
+     </strong>
+     .
+    </p>
+    <div class="table-wrap reveal">
+     <table>
+      <thead>
+       <tr>
+        <th>
+         Method
+        </th>
+        <th>
+         Accuracy (%)
+        </th>
+        <th>
+         Recall (%)
+        </th>
+        <th>
+         Precision (%)
+        </th>
+        <th>
+         F1-Score (%)
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         ViViT
+        </td>
+        <td>
+         66.67
+        </td>
+        <td>
+         35.68
+        </td>
+        <td class="best-val">
+         95.65
+        </td>
+        <td>
+         51.97
+        </td>
+       </tr>
+       <tr>
+        <td>
+         3D CNN
+        </td>
+        <td>
+         73.22
+        </td>
+        <td>
+         80.54
+        </td>
+        <td>
+         70.62
+        </td>
+        <td>
+         75.25
+        </td>
+       </tr>
+       <tr>
+        <td>
+         BrutNet
+        </td>
+        <td>
+         79.78
+        </td>
+        <td>
+         69.73
+        </td>
+        <td>
+         87.76
+        </td>
+        <td>
+         77.71
+        </td>
+       </tr>
+       <tr>
+        <td>
+         SepConvLSTM
+        </td>
+        <td>
+         91.80
+        </td>
+        <td>
+         90.27
+        </td>
+        <td>
+         93.30
+        </td>
+        <td>
+         91.76
+        </td>
+       </tr>
+       <tr class="row-ours">
+        <td>
+         <strong>
+          PCFormer (Ours)
+         </strong>
+         <span class="ours-badge">
+          ★ Best
+         </span>
+        </td>
+        <td class="best-val">
+         93.06
+        </td>
+        <td class="best-val">
+         93.08
+        </td>
+        <td>
+         93.21
+        </td>
+        <td class="best-val">
+         93.13
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="result-caption result-caption-spaced">
+     Performance comparison of studies and models on the
+     <strong>
+      Movies Fight dataset
+     </strong>
+     .
+    </p>
+    <div class="table-wrap reveal">
+     <table>
+      <thead>
+       <tr>
+        <th>
+         Study
+        </th>
+        <th>
+         Accuracy (%)
+        </th>
+        <th>
+         Recall (%)
+        </th>
+        <th>
+         Precision (%)
+        </th>
+        <th>
+         F1-Score (%)
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         Su et al., 2020
+        </td>
+        <td>
+         98.50
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Islam et al., 2021
+        </td>
+        <td class="best-val">
+         100.00
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Hachiuma et al., 2023
+        </td>
+        <td>
+         99.00
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Khan et al., 2024
+        </td>
+        <td>
+         99.00
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         98.00
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Dündar et al., 2024
+        </td>
+        <td class="best-val">
+         100.00
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Tran et al., 2025
+        </td>
+        <td class="best-val">
+         100.00
+        </td>
+        <td class="best-val">
+         100.00
+        </td>
+        <td class="best-val">
+         100.00
+        </td>
+        <td class="best-val">
+         100.00
+        </td>
+       </tr>
+       <tr class="row-ours">
+        <td>
+         <strong>
+          PCFormer (Ours)
+         </strong>
+        </td>
+        <td class="best-val">
+         100.00
+        </td>
+        <td class="best-val">
+         100.00
+        </td>
+        <td class="best-val">
+         100.00
+        </td>
+        <td class="best-val">
+         100.00
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="result-caption result-caption-spaced">
+     Performance comparison of studies and models on the
+     <strong>
+      Hockey Fight dataset
+     </strong>
+     .
+    </p>
+    <div class="table-wrap reveal">
+     <table>
+      <thead>
+       <tr>
+        <th>
+         Study
+        </th>
+        <th>
+         Accuracy (%)
+        </th>
+        <th>
+         Recall (%)
+        </th>
+        <th>
+         Precision (%)
+        </th>
+        <th>
+         F1-Score (%)
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         Su et al., 2020
+        </td>
+        <td>
+         96.80
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Islam et al., 2021
+        </td>
+        <td class="best-val">
+         99.50
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Hachiuma et al., 2023
+        </td>
+        <td class="best-val">
+         99.50
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Dündar et al., 2024
+        </td>
+        <td>
+         95.50
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Khan et al., 2024
+        </td>
+        <td>
+         98.50
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         98.00
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Tran et al., 2025
+        </td>
+        <td>
+         90.43
+        </td>
+        <td>
+         91.54
+        </td>
+        <td>
+         92.61
+        </td>
+        <td>
+         92.02
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Khan et al., 2025
+        </td>
+        <td>
+         97.20
+        </td>
+        <td>
+         95.10
+        </td>
+        <td>
+         95.10
+        </td>
+        <td>
+         95.10
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Negre et al., 2026
+        </td>
+        <td>
+         97.00
+        </td>
+        <td>
+         98.00
+        </td>
+        <td>
+         95.00
+        </td>
+        <td>
+         97.00
+        </td>
+       </tr>
+       <tr class="row-ours">
+        <td>
+         <strong>
+          PCFormer (Ours)
+         </strong>
+        </td>
+        <td>
+         99.10
+        </td>
+        <td class="best-val">
+         99.60
+        </td>
+        <td class="best-val">
+         98.62
+        </td>
+        <td class="best-val">
+         99.10
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="result-caption result-caption-spaced">
+     Performance comparison of studies and models on the
+     <strong>
+      Crowd Violence dataset
+     </strong>
+     .
+    </p>
+    <div class="table-wrap reveal">
+     <table>
+      <thead>
+       <tr>
+        <th>
+         Study
+        </th>
+        <th>
+         Accuracy (%)
+        </th>
+        <th>
+         Recall (%)
+        </th>
+        <th>
+         Precision (%)
+        </th>
+        <th>
+         F1-Score (%)
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         Varghese et al., 2020
+        </td>
+        <td>
+         92.90
+        </td>
+        <td>
+         92.00
+        </td>
+        <td>
+         93.00
+        </td>
+        <td>
+         -
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Su et al., 2020
+        </td>
+        <td>
+         94.50
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Hachiuma et al., 2023
+        </td>
+        <td>
+         94.70
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Khan et al., 2024
+        </td>
+        <td>
+         97.00
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         -
+        </td>
+        <td>
+         96.00
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Negre et al., 2026
+        </td>
+        <td>
+         90.00
+        </td>
+        <td>
+         97.00
+        </td>
+        <td>
+         86.00
+        </td>
+        <td>
+         91.00
+        </td>
+       </tr>
+       <tr class="row-ours">
+        <td>
+         <strong>
+          PCFormer (Ours)
+         </strong>
+        </td>
+        <td class="best-val">
+         99.60
+        </td>
+        <td class="best-val">
+         99.20
+        </td>
+        <td class="best-val">
+         100.00
+        </td>
+        <td class="best-val">
+         99.59
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <h2 class="section-title ablation-title">
+     Ablation Studies
+    </h2>
+    <hr class="section-hr"/>
+    <p class="result-caption">
+     Ablation results on SAVE, reported as mean ± standard deviation (%) over five independent runs.
+    </p>
+    <div class="table-wrap reveal">
+     <table>
+      <thead>
+       <tr>
+        <th>
+         Stream mode
+        </th>
+        <th>
+         Acc. (%)
+        </th>
+        <th>
+         Pre. (%)
+        </th>
+        <th>
+         Re. (%)
+        </th>
+        <th>
+         F1 (%)
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         Semantic Context Stream
+        </td>
+        <td>
+         89.13 ± 0.53
+        </td>
+        <td>
+         89.22 ± 2.53
+        </td>
+        <td>
+         89.41 ± 2.18
+        </td>
+        <td>
+         89.26 ± 0.26
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Pose-Based Action Stream
+        </td>
+        <td>
+         91.26 ± 1.00
+        </td>
+        <td>
+         92.79 ± 1.85
+        </td>
+        <td>
+         89.73 ± 2.51
+        </td>
+        <td>
+         91.20 ± 1.08
+        </td>
+       </tr>
+       <tr class="row-ours">
+        <td>
+         <strong>
+          Dual (Pose + Context)
+         </strong>
+        </td>
+        <td class="best-val">
+         93.06 ± 0.37
+        </td>
+        <td class="best-val">
+         93.21 ± 1.14
+        </td>
+        <td class="best-val">
+         93.08 ± 1.50
+        </td>
+        <td class="best-val">
+         93.13 ± 0.40
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="result-caption result-caption-spaced">
+     Ablation study evaluating the effectiveness of the proposed
+     <strong>
+      MBT architecture
+     </strong>
+     .
+    </p>
+    <div class="table-wrap reveal">
+     <table>
+      <thead>
+       <tr>
+        <th>
+         Interaction mode
+        </th>
+        <th>
+         Acc. (%)
+        </th>
+        <th>
+         Pre. (%)
+        </th>
+        <th>
+         Re. (%)
+        </th>
+        <th>
+         F1 (%)
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         Vanilla cross attention
+        </td>
+        <td>
+         91.42 ± 1.68
+        </td>
+        <td>
+         92.36 ± 3.65
+        </td>
+        <td>
+         90.70 ± 2.69
+        </td>
+        <td>
+         91.46 ± 1.56
+        </td>
+       </tr>
+       <tr>
+        <td>
+         W/o cross attention
+        </td>
+        <td>
+         91.42 ± 1.53
+        </td>
+        <td>
+         91.99 ± 2.46
+        </td>
+        <td>
+         91.03 ± 2.28
+        </td>
+        <td>
+         91.47 ± 1.50
+        </td>
+       </tr>
+       <tr class="row-ours">
+        <td>
+         <strong>
+          MBT (proposed)
+         </strong>
+        </td>
+        <td class="best-val">
+         93.06 ± 0.37
+        </td>
+        <td class="best-val">
+         93.21 ± 1.14
+        </td>
+        <td class="best-val">
+         93.08 ± 1.50
+        </td>
+        <td class="best-val">
+         93.13 ± 0.40
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="result-caption result-caption-spaced">
+     Ablation study on the effect of different
+     <strong>
+      fusion modes
+     </strong>
+     .
+    </p>
+    <div class="table-wrap reveal">
+     <table>
+      <thead>
+       <tr>
+        <th>
+         Fusion mode
+        </th>
+        <th>
+         Acc. (%)
+        </th>
+        <th>
+         Pre. (%)
+        </th>
+        <th>
+         Re. (%)
+        </th>
+        <th>
+         F1 (%)
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         Add
+        </td>
+        <td>
+         91.53 ± 1.71
+        </td>
+        <td>
+         92.95 ± 3.07
+        </td>
+        <td>
+         90.16 ± 1.64
+        </td>
+        <td>
+         91.51 ± 1.66
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Multiply
+        </td>
+        <td>
+         91.37 ± 1.05
+        </td>
+        <td>
+         92.90 ± 2.07
+        </td>
+        <td>
+         89.84 ± 1.81
+        </td>
+        <td>
+         91.32 ± 1.04
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Concat
+        </td>
+        <td>
+         91.37 ± 2.35
+        </td>
+        <td>
+         92.34 ± 4.73
+        </td>
+        <td>
+         90.81 ± 5.20
+        </td>
+        <td>
+         91.39 ± 2.36
+        </td>
+       </tr>
+       <tr class="row-ours">
+        <td>
+         <strong>
+          Gated (proposed)
+         </strong>
+        </td>
+        <td class="best-val">
+         93.06 ± 0.37
+        </td>
+        <td class="best-val">
+         93.21 ± 1.14
+        </td>
+        <td class="best-val">
+         93.08 ± 1.50
+        </td>
+        <td class="best-val">
+         93.13 ± 0.40
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="result-caption result-caption-spaced">
+     Ablation study on the effect of different
+     <strong>
+      pooling modes
+     </strong>
+     .
+    </p>
+    <div class="table-wrap reveal">
+     <table>
+      <thead>
+       <tr>
+        <th>
+         Pooling mode
+        </th>
+        <th>
+         Acc. (%)
+        </th>
+        <th>
+         Pre. (%)
+        </th>
+        <th>
+         Re. (%)
+        </th>
+        <th>
+         F1 (%)
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         GAP
+        </td>
+        <td>
+         89.78 ± 0.63
+        </td>
+        <td>
+         89.69 ± 2.15
+        </td>
+        <td>
+         90.27 ± 3.20
+        </td>
+        <td>
+         89.92 ± 0.77
+        </td>
+       </tr>
+       <tr>
+        <td>
+         Max
+        </td>
+        <td>
+         91.64 ± 2.52
+        </td>
+        <td>
+         91.38 ± 3.08
+        </td>
+        <td>
+         92.22 ± 2.58
+        </td>
+        <td>
+         91.78 ± 2.44
+        </td>
+       </tr>
+       <tr class="row-ours">
+        <td>
+         <strong>
+          Hierarchical (proposed)
+         </strong>
+        </td>
+        <td class="best-val">
+         93.06 ± 0.37
+        </td>
+        <td class="best-val">
+         93.21 ± 1.14
+        </td>
+        <td class="best-val">
+         93.08 ± 1.50
+        </td>
+        <td class="best-val">
+         93.13 ± 0.40
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="result-caption result-caption-spaced">
+     Ablation study on the impact of the
+     <strong>
+      number of bottleneck tokens
+     </strong>
+     .
+    </p>
+    <div class="table-wrap reveal">
+     <table>
+      <thead>
+       <tr>
+        <th>
+         Bottleneck tokens
+        </th>
+        <th>
+         Acc. (%)
+        </th>
+        <th>
+         Pre. (%)
+        </th>
+        <th>
+         Re. (%)
+        </th>
+        <th>
+         F1 (%)
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         K = 2
+        </td>
+        <td>
+         92.30 ± 0.99
+        </td>
+        <td>
+         92.55 ± 3.06
+        </td>
+        <td>
+         92.32 ± 2.04
+        </td>
+        <td>
+         92.38 ± 0.85
+        </td>
+       </tr>
+       <tr class="row-ours">
+        <td>
+         <strong>
+          K = 4
+         </strong>
+        </td>
+        <td class="best-val">
+         93.06 ± 0.37
+        </td>
+        <td>
+         93.21 ± 1.14
+        </td>
+        <td class="best-val">
+         93.08 ± 1.50
+        </td>
+        <td class="best-val">
+         93.13 ± 0.40
+        </td>
+       </tr>
+       <tr>
+        <td>
+         K = 6
+        </td>
+        <td>
+         91.20 ± 0.53
+        </td>
+        <td class="best-val">
+         95.17 ± 0.83
+        </td>
+        <td>
+         87.03 ± 1.83
+        </td>
+        <td>
+         90.90 ± 0.66
+        </td>
+       </tr>
+       <tr>
+        <td>
+         K = 8
+        </td>
+        <td>
+         90.00 ± 0.79
+        </td>
+        <td>
+         94.49 ± 2.63
+        </td>
+        <td>
+         85.30 ± 2.66
+        </td>
+        <td>
+         89.60 ± 0.84
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+   </div>
+  </section>
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer>
+   <div class="container">
+    <p>
+     © 2026 PCFormer Authors · Ho Chi Minh City University of Education &amp; University of Information Technology,
+          VNU-HCM
+    </p>
+    <p class="footer-secondary">
+     <!-- Dataset: <a href="#" target="_blank">SAVE (School Aggression and Violence Evaluation)</a> · -->
+     Inspired by
+     <a href="https://nerfies.github.io" target="_blank">
+      Nerfies
+     </a>
+    </p>
+   </div>
+  </footer>
+  <!-- ══════════════ JS ══════════════ -->
+  <script defer="True" src="assets/js/main.js">
+  </script>
+ </body>
+</html>
+
